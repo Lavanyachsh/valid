@@ -1,0 +1,85 @@
+<style>
+    .menu {
+        text-align: right;
+        background: yellow;
+        line-height: 40px;
+    }
+
+    .menu>a {
+        font-size: 18px;
+        font-weight: bold;
+        font-style: italic;
+        margin-right: 15px;
+        letter-spacing: 3px;
+    }
+
+    .mobile-menu {
+        width: 100px;
+        text-align: left;
+        padding: 20px;
+        position: absolute;
+        top: 30px;
+        left: -140px;
+        transition: left 2s;
+        background:yellow;
+    }
+    .mobile-menu > a{
+        display: block;
+        margin: 10px;
+    }
+
+    body {
+        margin: 0
+    }
+</style>
+<input id='mobile-menu-btn' onclick="fnMobileMenuClick()" type='button' value="menu" />
+<div id='menu' onclick="fnMenuClick()">
+    <a href="#/home">Home</a>
+    <a href="#/about">About</a>
+    <a href="#/contact">Contact</a>
+</div>
+<script>
+    var cnt = 0;
+    var flag = true;
+    var menuRef=document.querySelector('#menu');
+    var btnRef = document.getElementById('mobile-menu-btn');
+    btnRef.style.display = 'none';
+    window.addEventListener('resize', function () {
+        if (flag) {
+            resize();
+            flag = false;
+            setTimeout(function () {
+                flag = true;
+            }, 200)
+        }
+
+    })
+
+    function resize() {
+        var width = document.body.offsetWidth;
+        if (width < 700) {
+            btnRef.style.display = 'inline';
+            menuRef.className='mobile-menu'
+        } else {
+            btnRef.style.display = 'none';
+            menuRef.className="menu"
+        }
+    }
+    function fnMobileMenuClick(){
+        var styleAttr=menuRef.getAttribute('style')
+          if(styleAttr == null){
+           menuRef.style.left='0px';
+          }else{
+              menuRef.removeAttribute('style');
+          }
+    }
+
+    resize();
+
+    function fnMenuClick(){
+        var mobileMenuRef=document.querySelector('.mobile-menu');
+        if(mobileMenuRef){
+            fnMobileMenuClick();
+        }
+    }
+</script>
